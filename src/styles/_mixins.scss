@@ -1,0 +1,15 @@
+$grid-tablet-breakpoint: 1020px;
+$grid-mobile-breakpoint: 768px;
+
+@mixin tablet() {
+  @media screen and (max-width: $grid-tablet-breakpoint) {
+    @content;
+  }
+}
+
+
+@mixin mobile() {
+  @media screen and (max-width: $grid-mobile-breakpoint) {
+    @content;
+  }
+}

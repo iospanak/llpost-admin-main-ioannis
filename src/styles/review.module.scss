@@ -1,0 +1,105 @@
+@import "mixins";
+
+.review {
+  padding: 20px;
+  border: 1px solid #E5E7EB;
+  box-sizing: border-box;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  .reviewHeader {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    @include mobile() {
+      flex-direction: column;
+    }
+    @include tablet() {
+      flex-direction: column;
+    }
+
+    .gravatar {
+      border-radius: 50%;
+      margin-right: 16px;
+    }
+
+    .author {
+      .authorName {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: #111827;
+      }
+
+      .authorEmail {
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 20px;
+        color: #6B7280;
+
+      }
+
+    }
+
+    .rating {
+      margin-left: 130px;
+
+      @include mobile() {
+        margin-left: 0;
+      }
+      @include tablet() {
+        margin-left: 0;
+      }
+
+
+      .label {
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 20px;
+        color: #6B7280;
+        @include mobile() {
+          display: none;
+        }
+        @include tablet() {
+          display: none;
+        }
+      }
+
+      .stars {
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 23px;
+        color: #111827;
+      }
+    }
+
+  }
+
+  .reviewContent {
+    margin-top: 20px;
+
+    h5 {
+      font-size: 14px;
+      line-height: 20px;
+      color: #6B7280;
+      font-weight: normal;
+      margin: 0;
+      padding: 0;
+      margin-bottom: 4px;
+
+
+    }
+
+    div {
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 23px;
+      color: #111827;
+    }
+  }
+}

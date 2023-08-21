@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.quill {
+  .ql-toolbar {
+    @apply rounded-t-md
+  }
+  .ql-container {
+    @apply rounded-b-md
+  }
+
+  .ql-editor {
+    max-height: 540px;
+    @apply overflow-scroll;
+
+    .ql-lg & {
+      min-height: 320px;
+    }
+  }
+}
