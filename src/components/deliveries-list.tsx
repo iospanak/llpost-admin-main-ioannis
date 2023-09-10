@@ -133,7 +133,7 @@ export const DeliveriesList = (customerId: string, path = '') => {
                                         </ColumnHeader>
                                         <ColumnHeader
                                              onChange={orderBy}
-                                             orderBy='delivery.driver'
+                                             orderBy='delivery.driverId'
                                              pagination={pagination}
                                              className='px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider'
                                          >
@@ -171,7 +171,7 @@ export const DeliveriesList = (customerId: string, path = '') => {
                                                 {fd(delivery.createdAt)}
                                             </td>
                                             <td className='px-6 py-4  text-sm font-medium text-gray-500'>
-                                                {delivery.driver}
+                                                {delivery.driverId}
                                             </td>
                                             <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'>
                                                 {delivery.invoiceId ? <div

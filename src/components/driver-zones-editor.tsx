@@ -1,45 +1,35 @@
 import { useToasts } from 'react-toast-notifications';
 import React, { useEffect, useState } from 'react';
 import { apiService } from '../services/api.service';
-import InputZonePrice from './input-zone-price';
+//import InputZonePrice from './input-zone-price';
+import InputZoneDriver from './input-zone-driver';
 
-export const ZonePricesEditor = (counties: any[], customerId: string, onlyDelivery:boolean ) => {
+export const DriverZonesEditor = (counties: any[], carrier: string, onlyDelivery:boolean ) => {
 	const {addToast} = useToasts();
 
 	const [activeCounty, setActiveCounty] = useState('Alba');
 	const [zones, setZones] = useState(Array<any>());
 	const [cities, setCities] = useState(Array<any>());
 	const [countiesCounts, setCountiesCounts] = useState(Array<any>());
-	const [customerData, setCustomerData] = useState(null);
-
-	const getCustomer = async () => {
-	    const z = await apiService.get(`/customers/${customerId}`);
-	    setCustomerData(z);
-	};
-
-	useEffect(() => {
-	    if (customerData === null)
-           getCustomer().then(() => null);
-    }, []);
+    const [drivers,setDrivers] = useState(Array<any>());
 
 	const getZones = async () => {
-		const z = await apiService.get('/pricing/' + customerId + '/get-zones') || [];
+		const z = await apiService.get('/carriers/' + carrier + '/get-zones') || [];
 		setZones(z);
 		setCountiesCounts(counties.map((c: any) => z.filter((zz: any) => zz.county == c).length));
 	};
 	const getCities = async () => setCities(await apiService.get('/locations/counties/' + activeCounty) || []);
+    const getDrivers = async () => setDrivers((await apiService.get(`/users/role/DD`)).data);
 	const zonesForCounty = () => activeCounty ? zones.filter(z => z.county == activeCounty) : [];
-	const addPrice = (zone: any) => {
+	const addDriver= (zone: any) => {
 		console.log(zone)
-		apiService.post('/pricing/'+customerId+'/set-price-zone', {
+		apiService.post('/carriers/'+carrier+'/set-driver-zone', {
 			name: zone.name,
-			pickup: +zone.pickup||0,
-			delivery: +zone.delivery ||0,
 			zone: {
+                driverId: zone.driverId,
 				cityId: zone.cityId,
 				county: activeCounty
-			},
-			customerId: zone.customerId
+			}
 		}).then(() => {
 			addToast(zone.id ? 'Zona a fost modificata' : 'Zona a fost adaugata', {appearance: 'success'});
 			getZones().then(null);
@@ -48,7 +38,7 @@ export const ZonePricesEditor = (counties: any[], customerId: string, onlyDelive
 
 	};
 	const remove = (id: string) => {
-		apiService.delete('/pricing/'+customerId+'/remove-price-zone/' + id).then(() => {
+		apiService.delete('/carriers/'+carrier+'/remove-driver-zone/' + id).then(() => {
 			getZones().then(null);
 			addToast('Zona a fost stearsa', {appearance: 'success'});
 		});
@@ -58,11 +48,10 @@ export const ZonePricesEditor = (counties: any[], customerId: string, onlyDelive
 	}, []);
 	useEffect(() => {
 		getCities().then(null);
+        getDrivers().then(null)
 	}, [activeCounty]);
-
 	return (
 		<div>
-		<h4 className='h4'>Pricing For {customerData?customerData.name:'Unknown'}</h4>
 			<div className='flex flex-row'>
 				<div className='m-4   '>
 					<div className='bg-white  shadow overflow-auto' style={{maxHeight: 'calc(100vh - 200px)', minWidth: '220px'}}>
@@ -77,9 +66,9 @@ export const ZonePricesEditor = (counties: any[], customerId: string, onlyDelive
 
 				</div>
 				<div className='flex-row'>
-					<InputZonePrice cities={cities} zone={null} setPrice={(price: any) => addPrice(price)} onlyDelivery={onlyDelivery} />
+					<InputZoneDriver cities={cities} drivers={drivers} zone={null} setDriver={(zone: any) => addDriver(zone)} onlyDelivery={onlyDelivery} />
 					<hr className={'pb-4 mt-4'} />
-					{zonesForCounty().map(zone => <InputZonePrice key={zone.id} cities={cities} zone={zone} setPrice={(prices: any) => addPrice(prices)}
+					{zonesForCounty().map(zone => <InputZoneDriver key={zone.id} cities={cities} drivers={drivers} zone={zone} setDriver={(zone: any) => addDriver(zone)}
 																  onlyDelivery={onlyDelivery}
 																  remove={() => remove(zone.id)}/>)}
 				</div>

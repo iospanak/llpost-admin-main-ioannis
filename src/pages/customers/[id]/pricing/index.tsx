@@ -1,8 +1,6 @@
-import React, {useState, useEffect} from 'react';
 import {getLayout} from '../../../../components/layouts/site-layout';
 import getConfig from 'next/config';
 import {ZonePricesEditor} from '../../../../components/zone-prices-editor';
-import {apiService} from "../../../../services/api.service";
 
 // @ts-ignore
 const Pricing = ({customerId, counties}: { customerId: string, counties: any[] }) => {

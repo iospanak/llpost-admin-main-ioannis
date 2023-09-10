@@ -47,7 +47,7 @@ export interface IDelivery  {
 	destinationPhone: string;
 	destinationEmail: string;
 	destinationContact: string;
-	driver: string;
+	driverId: string;
 	deliveryPrice: number;
 	sentToCarrier?: any;
 	weight?: any;
@@ -73,17 +73,17 @@ const Delivery = ({id}: { id: string }) => {
 		const [delivery, updateDelivery] = useState<IDelivery>({} as IDelivery);
 		const getDelivery = async (id: string) => updateDelivery(await apiService.get(`/deliveries/${id}`));
 
-		const [driver, setDriver] = useState(null);
-        const getDriver = async () =>{
+		//const [driver, setDriver] = useState(null);
+        /* getDriver = async () =>{
             const driverId = delivery.driver;
             console.log("Driver: " + driverId);
             setDriver(await apiService.get(`/users/${driverId}`));
-        };
+        };*/
 
 		useEffect(() => {
 			getDelivery(id).then(null);
 			getCarriers().then(null);
-			getDriver().then(null);
+			//getDriver().then(null);
 		}, [router]);
 
 
@@ -177,7 +177,7 @@ const Delivery = ({id}: { id: string }) => {
 								Continut: {delivery.contents}
 							</div>
 							<div className='flex flex-wrap flex-grow mt-4 '>
-                            	Driver: {driver ? driver.email : delivery.driver}
+                            	Driver: {delivery.driverId}
                             </div>
 
 							<div className='flex flex-wrap flex-grow mt-4 '>

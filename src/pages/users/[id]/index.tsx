@@ -3,9 +3,10 @@ import React, {FormEventHandler, useEffect, useState} from 'react';
 import 'react-quill/dist/quill.snow.css';
 import {useRouter} from 'next/router';
 import {useToasts} from 'react-toast-notifications';
-import {getLayout} from '../../components/layouts/site-layout';
-import {apiService} from '../../services/api.service';
-import {RoleTypeLabels} from '../users';
+import {getLayout} from '../../../components/layouts/site-layout';
+import {apiService} from '../../../services/api.service';
+import {RoleTypeLabels} from '../../users';
+import Link from 'next/link';
 
 
 export enum RoleType {
@@ -188,6 +189,11 @@ const User = ({id}: { id: string }) => {
                 </div>
                 <div>
                     <div className='flex justify-end'>
+                    {(formData.role == RoleType.WAREHOUSE) && <Link href={'/users/'+id+'/magaziner'}>
+                        	<button type={'button'} className='block py-2 mr-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-1 hover:bg-accent-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600'>
+                        		Assign Drivers
+                        	</button>
+                        </Link>}
                         <button
                             type='button'
                             onClick={() => formData.customerId?router.push('/customers/'+formData.customerId):router.push('/users')}

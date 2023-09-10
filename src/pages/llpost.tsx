@@ -1,13 +1,13 @@
 import React from 'react';
 import {getLayout} from '../components/layouts/site-layout';
 import getConfig from 'next/config';
-import {ZonesEditor} from '../components/zones-editor';
+import {DriverZonesEditor} from '../components/driver-zones-editor';
 
 // @ts-ignore
 const LLPost = ({data: {counties}}) => {
 	return <div>
 		<h4 className='h4'>LLPost</h4>
-		{ZonesEditor(counties, 'llpost', false)}
+		{DriverZonesEditor(counties, 'llpost', false)}
 	</div>;
 };
 LLPost.getLayout = getLayout;

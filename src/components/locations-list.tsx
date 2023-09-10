@@ -127,6 +127,14 @@ export const LocationsList = (customerId: string, path = '') => {
 										</ColumnHeader>
 										<ColumnHeader
 											onChange={orderBy}
+											orderBy='location.driverId'
+											pagination={pagination}
+											className='px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider'
+										>
+											Driver
+										</ColumnHeader>
+										<ColumnHeader
+											onChange={orderBy}
 											orderBy='location.created_at'
 											pagination={pagination}
 											className='px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider'
@@ -155,7 +163,9 @@ export const LocationsList = (customerId: string, path = '') => {
 											<td className='px-6 py-4  text-sm font-medium text-gray-500'>
 												{location.city.name}
 											</td>
-
+											<td className='px-6 py-4  text-sm font-medium text-gray-500'>
+												{location.driverId}
+											</td>
 											<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'>
 												{fd(location.createdAt)}
 											</td>

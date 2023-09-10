@@ -14,21 +14,21 @@ const New = ({customerId}: { customerId: string, counties: any[] }) => {
         sourceId: '',
         destinationId: '',
         carrier: '',
-        driver: ''
+     //   driver: ''
     });
 
     const [formData, updateFormData] = useState(initialFormData);
     const [locations, setLocations] = useState([]);
-    const [drivers, setDrivers] = useState([]);
+    //const [drivers, setDrivers] = useState([]);
     const getLocations = async () => setLocations((await apiService.get(`/locations/user/${customerId}`)).data);
-    const getDrivers = async () => setDrivers((await apiService.get(`/users/role/DD`)).data);
+    //const getDrivers = async () => setDrivers((await apiService.get(`/users/role/DD`)).data);
 
     const {addToast} = useToasts();
 
     useEffect(() => {
         updateFormData(initialFormData);
         getLocations().then(() => {});
-        getDrivers().then(() => {});
+//        getDrivers().then(() => {});
         console.log('////')
     }, []);
 
@@ -90,21 +90,6 @@ const New = ({customerId}: { customerId: string, counties: any[] }) => {
                          {locations.map((c: any) => <option key={c.id} value={c.id}>{c.name}</option>)}
                      </select>
                  </div>
-            </label>
-            <label className='block text-sm font-medium text-gray-700'>
-                Alegeti livrator
-                <div className='mt-1'>
-                    <select
-                        required={true}
-                        className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
-                        placeholder='Alegeti livrator'
-                        onChange={({target}) => updateFormData({...formData, driver: target.value})}
-                        value={formData.driver}
-                    >
-                        <option key={0} value=''>-</option>
-                        {drivers.map((c: any) => <option key={c.id} value={c.id}>{c.email}</option>)}
-                    </select>
-                </div>
             </label>
             <div>
                 <div className='flex justify-end'>
